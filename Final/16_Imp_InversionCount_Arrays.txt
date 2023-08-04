@@ -1,0 +1,164 @@
+//User function Template for Java
+
+class Solution
+{
+    static long inversionCount(long arr[], long N) {
+        long[] temp = new long[(int) N];
+        return mergeSortAndCount(arr, temp, 0, (int)N - 1);
+    }
+
+    private static long mergeSortAndCount(long arr[], long temp[], int left, int right) {
+        long count = 0;
+
+        if (left < right) {
+            int mid = left + (right - left) / 2;
+            count += mergeSortAndCount(arr, temp, left, mid);
+            count += mergeSortAndCount(arr, temp, mid + 1, right);
+            count += mergeAndCount(arr, temp, left, mid, right);
+        }
+
+        return count;
+    }
+
+    private static long mergeAndCount(long arr[], long temp[], int left, int mid, int right) {
+        long count = 0;
+
+        int i = left;
+        int j = mid + 1;
+        int k = left;
+
+        while (i <= mid && j <= right) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+                count += mid - i + 1; // Count inversions
+            }
+        }
+
+        while (i <= mid) {
+            temp[k++] = arr[i++];
+        }
+
+        while (j <= right) {
+            temp[k++] = arr[j++];
+        }
+
+        for (i = left; i <= right; i++) {
+            arr[i] = temp[i];
+        }
+
+        return count;
+    }
+}
+
+
+/*
+Sure, here's a simple note explaining the steps followed to achieve an optimized solution to count inversions using the Merge Sort algorithm:
+
+1. **Main Function (inversionCount)**:
+   - The function takes the array `arr[]` and its size `N` as input and returns the count of inversions.
+   - It initializes an array `temp[]` of the same size as the input array to store temporary values during merging.
+   - It calls the private function `mergeSortAndCount` with the input array, `temp[]`, left index (`0`), and right index (`N-1`) to start the Merge Sort process.
+
+2. **Merge Sort Function (mergeSortAndCount)**:
+   - The function takes the array `arr[]`, temporary array `temp[]`, left index `left`, and right index `right`.
+   - It uses a divide-and-conquer approach to sort the array and count inversions.
+   - If the left index is less than the right index, it calculates the middle index `mid`.
+   - It recursively calls `mergeSortAndCount` for the left and right halves of the array, i.e., for `left` to `mid` and `mid+1` to `right`.
+   - It also calls the `mergeAndCount` function to merge the sorted halves and count the inversions while merging.
+   - It returns the total count of inversions from the left and right halves.
+
+3. **Merge and Count Function (mergeAndCount)**:
+   - The function takes the array `arr[]`, temporary array `temp[]`, left index `left`, middle index `mid`, and right index `right`.
+   - It merges two sorted halves (from `left` to `mid` and from `mid+1` to `right`) of the array into the `temp[]` array.
+   - While merging, it also counts the number of inversions in the current merge step.
+   - It uses three pointers `i`, `j`, and `k` to keep track of the indices while merging.
+   - While `i` is less than or equal to `mid` and `j` is less than or equal to `right`, it compares the elements at `i` and `j` and puts the smaller element into the `temp[]` array.
+   - If the element at `arr[i]` is greater than the element at `arr[j]`, it means there are inversions. So, it increments the inversion count by `(mid - i + 1)` (number of remaining elements in the left half).
+   - After merging, it copies the elements from the temporary array `temp[]` back to the original array `arr[]`.
+   - It returns the total count of inversions in the current merge step.
+
+By following these steps, the code efficiently counts the inversions using the Merge Sort algorithm, achieving a time complexity of O(N log N) which is more efficient than the previous approach with O(N^2) time complexity.
+
+*/
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Explanation for MergeAndCount function with example:
+
+**Input**: Array `arr = [1, 2, 3, 4, 5]`, Temporary array `temp`, Left index `left = 0`, Middle index `mid = 1`, Right index `right = 4`.
+
+**Step 1**: Initialization
+
+- We start with two sorted halves of the array. The left half is `[1, 2]` (from `left` to `mid`) and the right half is `[3, 4, 5]` (from `mid + 1` to `right`).
+
+- We also initialize three pointers:
+  - `i = left`, points to the first element of the left half (i.e., `i = 0`).
+  - `j = mid + 1`, points to the first element of the right half (i.e., `j = 2`).
+  - `k = left`, points to the current position in the temporary array (i.e., `k = 0`).
+
+**Step 2**: Merge and Count
+
+- We compare elements at indices `i` and `j` of the array.
+  - `arr[i]` is `1`.
+  - `arr[j]` is `3`.
+
+- Since `arr[i]` is smaller than `arr[j]`, we put `arr[i]` into the temporary array `temp` at index `k`.
+  - `temp[k] = 1`.
+  - Increment `k` by 1 (i.e., `k = 1`).
+
+- Now, we compare elements at indices `i` and `j` again.
+  - `arr[i]` is `2`.
+  - `arr[j]` is `3`.
+
+- Again, `arr[i]` is smaller than `arr[j]`, so we put `arr[i]` into the temporary array `temp` at index `k`.
+  - `temp[k] = 2`.
+  - Increment `k` by 1 (i.e., `k = 2`).
+
+- Now, we compare elements at indices `i` and `j`.
+  - `arr[i]` is `2`.
+  - `arr[j]` is `4`.
+
+- This time, `arr[i]` is smaller than `arr[j]`, so we put `arr[i]` into the temporary array `temp` at index `k`.
+  - `temp[k] = 2`.
+  - Increment `k` by 1 (i.e., `k = 3`).
+
+- Now, we compare elements at indices `i` and `j` again.
+  - `arr[i]` is `3`.
+  - `arr[j]` is `4`.
+
+- Once more, `arr[i]` is smaller than `arr[j]`, so we put `arr[i]` into the temporary array `temp` at index `k`.
+  - `temp[k] = 3`.
+  - Increment `k` by 1 (i.e., `k = 4`).
+
+- Now, `i` has reached the end of the left half (i.e., `i > mid`). So, we copy the remaining elements from the right half to the temporary array.
+
+- We copy `arr[j]` (which is `4`) to `temp[k]`.
+  - `temp[k] = 4`.
+  - Increment `j` by 1 (i.e., `j = 3`) and `k` by 1 (i.e., `k = 5`).
+
+- We copy the last element of the right half, which is `5`, to `temp[k]`.
+  - `temp[k] = 5`.
+  - Increment `j` by 1 (i.e., `j = 4`) and `k` by 1 (i.e., `k = 6`).
+
+**Step 3**: Copying Back to the Original Array
+
+- Now, we have merged and sorted both halves, and the temporary array `temp` looks like this: `[1, 2, 3, 4, 5]`.
+
+- We copy the elements from the temporary array back to the original array `arr`.
+
+- `arr[0] = temp[0]`, which is `1`.
+- `arr[1] = temp[1]`, which is `2`.
+- `arr[2] = temp[2]`, which is `3`.
+- `arr[3] = temp[3]`, which is `4`.
+- `arr[4] = temp[4]`, which is `5`.
+
+**Step 4**: Counting Inversions
+
+- While merging, we counted the number of inversions that occurred.
+- Since we only had to swap `arr[1]` and `arr[2]` during the merge (when `2` is moved before `3`), there is only `1` inversion in this example.
+
+**Result**: The array `[1, 2, 3, 4, 5]` is already sorted, and there is only `1` inversion.

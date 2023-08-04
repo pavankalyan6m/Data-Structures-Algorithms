@@ -1,0 +1,28 @@
+class Solution{
+    //Function to check whether there is a subarray present with 0-sum or not.
+    static boolean findsum(int arr[],int n)
+    {
+        //Your code here
+        int sum=0;
+        HashSet<Integer> set = new HashSet<>();
+        for(int i: arr)
+        {
+          
+          sum+=i;
+          System.out.println(sum);
+          
+           // Check if current sum is already in the HashSet
+          //If present, then thereis already a subarray whose sum has become zero, so return true
+            if (set.contains(sum) || sum == 0) {
+                //System.out.println("Sum is: "+sum);
+                return true;
+            }
+                
+                
+          // Add the current sum to the HashSet
+            set.add(sum);
+           // System.out.println(set);
+        }
+        return false;
+    }
+}

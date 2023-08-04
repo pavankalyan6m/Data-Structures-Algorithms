@@ -1,0 +1,68 @@
+// User function Template for Java
+
+class Solution {
+    int getMinDiff(int[] arr, int n, int k) {
+        // code here
+        Arrays.sort(arr);
+        // Maximum possible height difference
+        //for array example k=2, n=4, arr[] = {1,5,8,10}
+        int min=arr[0]; //1
+        int max = arr[n-1]; //10
+        int ans=max-min; //9
+        for(int i=1;i<n;i++){
+            if(arr[i]-k<0){continue;}
+            min = Math.min(arr[0]+k,arr[i]-k); //3,3
+            max = Math.max(arr[i-1]+k,arr[n-1]-k); //3,8
+            ans = Math.min(ans,max-min); //(9,5)
+        }
+        return ans;
+    }
+}
+
+
+EXPLANATION:
+
+1. Sort the array in ascending order:
+```java
+Arrays.sort(arr);
+```
+The first step of the code is to sort the input array `arr` in ascending order. This sorting operation arranges the tower heights from the shortest to the tallest, making it easier to calculate the minimum and maximum possible heights.
+
+2. Initialize variables `min`, `max`, and `ans`:
+```java
+int min = arr[0];
+int max = arr[n - 1];
+int ans = max - min;
+```
+Here, `min` is set to the height of the shortest tower (the first element of the sorted array `arr[0]`). `max` is set to the height of the tallest tower (the last element of the sorted array `arr[n - 1]`). `ans` is initialized to the maximum possible height difference between the tallest and shortest towers in the array.
+
+3. Iterate through the sorted array and calculate the minimum and maximum possible heights for each tower:
+```java
+for (int i = 1; i < n; i++) {
+    if (arr[i] - k < 0) {
+        continue;
+    }
+    min = Math.min(arr[0] + k, arr[i] - k);
+    max = Math.max(arr[i - 1] + k, arr[n - 1] - k);
+    ans = Math.min(ans, max - min);
+}
+```
+The loop starts from index `1` because we have already considered the first element as the minimum height (`min = arr[0]`) outside the loop.
+
+- Inside the loop, we first check if the current tower's height minus `k` is less than zero. If it is, it means reducing `k` from the current height would result in a negative value, which is not valid for the problem's context. In such cases, we skip the current iteration using `continue`.
+
+- If the current tower's height minus `k` is greater than or equal to zero (`arr[i] - k >= 0`), we proceed to calculate the minimum and maximum possible heights for the current tower.
+
+- `min`: The minimum possible height for the current tower is calculated as the smaller value between `arr[0] + k` (the minimum possible height achieved by increasing the height of the shortest tower by `k`) and `arr[i] - k` (the minimum possible height achieved by reducing the height of the current tower by `k`).
+
+- `max`: The maximum possible height for the current tower is calculated as the larger value between `arr[i - 1] + k` (the maximum possible height achieved by increasing the height of the previous tower by `k`) and `arr[n - 1] - k` (the maximum possible height achieved by reducing the height of the tallest tower by `k`).
+
+- The `ans` is updated with the minimum value between the previously calculated `ans` and the difference between the maximum and minimum possible heights for the current tower. This ensures that `ans` stores the smallest height difference among all the towers processed so far.
+
+4. Return the final answer `ans`:
+```java
+return ans;
+```
+Finally, the function returns the minimum possible height difference (`ans`) between the tallest and shortest towers after adjusting the heights by at most `k`.
+
+The overall purpose of this function is to find the minimum height difference that can be achieved by adjusting the heights of the towers within the array by at most `k`. It does so by iterating through the sorted array and calculating the minimum and maximum possible heights for each tower while updating the answer (`ans`) with the smallest height difference found so far.
