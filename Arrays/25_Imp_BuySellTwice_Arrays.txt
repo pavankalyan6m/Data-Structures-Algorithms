@@ -1,0 +1,56 @@
+class Solution {
+   public static int maxProfit(int n, int[] price) {
+        if (n <= 1) {
+            return 0; // No profit can be made with less than two prices.
+        }
+
+        // Arrays to keep track of maximum profit for each transaction
+        int[] buy = new int[3];
+        int[] sell = new int[3];
+
+        for (int i = 0; i < 3; i++) {
+            buy[i] = Integer.MIN_VALUE;// Initialize the buy array with a very low value.
+            sell[i] = 0;// Initialize the sell array with 0.
+        }
+
+        // Loop through the prices to calculate buy and sell values for each transaction.
+
+        for (int pr : price) {
+            for (int i = 1; i <= 2; i++) {
+                buy[i] = Math.max(buy[i], sell[i - 1] - pr);// Calculate the maximum profit if buying at the current price.
+                sell[i] = Math.max(sell[i], buy[i] + pr);// Calculate the maximum profit if selling at the current price.
+            }
+        }
+
+        return sell[2];// The final element of the sell array represents the maximum profit with 2 transactions.
+    }
+}
+        
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Optimized Solution:
+
+ class Solution {
+   public static int maxProfit(int n,int[] prices) {
+        int buy1 = Integer.MIN_VALUE; // Maximum profit if buying the first stock
+        int sell1 = 0; // Maximum profit if selling the first stock
+        int buy2 = Integer.MIN_VALUE; // Maximum profit if buying the second stock
+        int sell2 = 0; // Maximum profit if selling the second stock
+
+        for (int price : prices) {
+            buy1 = Math.max(buy1, -price); // Calculate the maximum profit if buying the first stock.
+           // System.out.println("Buy1: "+buy1);
+            sell1 = Math.max(sell1, buy1 + price); // Calculate the maximum profit if selling the first stock.
+            //System.out.println("Sell1: "+sell1);
+            buy2 = Math.max(buy2, sell1 - price); // Calculate the maximum profit if buying the second stock.
+            //System.out.println("Buy2: "+buy2);
+            sell2 = Math.max(sell2, buy2 + price); // Calculate the maximum profit if selling the second stock.
+            //System.out.println("Sell2: "+sell2);
+            
+        }
+
+        return sell2; // The final value of sell2 represents the maximum profit with exactly two transactions.
+    }
+
+}
+        

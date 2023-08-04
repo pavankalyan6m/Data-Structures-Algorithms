@@ -1,0 +1,25 @@
+
+class Solution
+{
+    public int find_median(int[] v)
+    {
+        // Code here
+        int n= v.length;
+        ArrayList<Integer> list = new ArrayList<>();
+       for(int i: v)
+        {
+                list.add(i);
+        }
+        Collections.sort(list);
+        int result = 0;
+         if(n%2!=0)
+        {
+            result= list.get(n/2);
+        }
+        else{
+            result = list.get(n/2-1)+list.get(n/2);
+            result/=2;
+        }
+        return result;
+    }
+}

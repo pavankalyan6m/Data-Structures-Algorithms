@@ -1,0 +1,29 @@
+
+class GFG 
+{ 
+    static double medianOfArrays(int n, int m, int a[], int b[]) 
+    {
+        // Your Code Here
+        ArrayList<Integer> list = new ArrayList<>();
+        double result =0;
+        for(int i=0;i<n;i++)
+        {
+            list.add(a[i]);
+        }
+        for(int i=0;i<m;i++)
+        {
+            list.add(b[i]);
+        }
+        Collections.sort(list);
+        int size = list.size();
+        if(size%2==0)
+        {
+            result = list.get((size/2)-1)+list.get(size/2);
+            result /=2;
+        }
+        else{
+            result = list.get(size/2);
+        }
+        return result;
+    }
+}

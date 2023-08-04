@@ -1,0 +1,61 @@
+
+class Complete{
+    
+   
+    // Function for finding maximum and value pair
+    public static int minSwap (int arr[], int n, int k) {
+       
+    
+         // Step 1: Count the total number of elements less than or equal to k
+        int countK = 0;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] <= k) {
+            countK++;
+            }
+         }
+          
+        // Step 2: Initialize the sliding window and find the minimum number of elements greater than k within the window
+        int countGreaterThanK = 0;
+        for (int i = 0; i < countK; i++) {
+            if (arr[i] > k) {
+                countGreaterThanK++;
+            }
+        }
+        
+        
+        int minSwaps = countGreaterThanK;
+        
+      // The sliding window has a left pointer 'i' and a right pointer 'j'.
+      // Initially, 'i' points to the start of the window (0), and 'j' points to the end of the window (countK).
+
+    for (int i = 0, j = countK; j < n; i++, j++) {
+
+        // Step 1: Remove the leftmost element from the window
+        // If the element at 'i' is greater than 'k', it means it needs to be moved inside the window.
+        // So, we decrement 'countGreaterThanK' to reflect that one element is removed from the window.
+        if (arr[i] > k) {
+            countGreaterThanK--;
+        }
+
+        // Step 2: Add the rightmost element to the window
+        // If the element at 'j' is greater than 'k', it means it needs to be moved inside the window.
+        // So, we increment 'countGreaterThanK' to reflect that one element is added to the window.
+        if (arr[j] > k) {
+            countGreaterThanK++;
+        }
+
+        // Step 3: Update the minimum number of swaps required
+        // After removing one element from the left side of the window (if needed) and adding one element to the right side (if needed),
+        // 'countGreaterThanK' will be the new count of elements greater than 'k' within the window.
+        // We keep track of the minimum value of 'countGreaterThanK' encountered so far as it represents the minimum number of swaps required.
+            minSwaps = Math.min(minSwaps, countGreaterThanK);
+        }
+
+    // At the end of the loop, 'minSwaps' will hold the minimum number of swaps required to bring all elements less than or equal to 'k'    
+    // together as a contiguous subarray.
+
+    
+        return minSwaps;
+    }
+    
+}
