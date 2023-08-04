@@ -1,0 +1,33 @@
+
+
+class Solution {
+
+    public static int smallestSubWithSum(int a[], int n, int x) {
+        // Your code goes here 
+         // Initialize pointers
+        int start = 0;
+        int end = 0;
+        int sum = 0;
+        int minLength = Integer.MAX_VALUE;
+
+        while (end < n) {
+            sum += a[end];
+
+            // Check if the current window sum is greater than x
+            // If yes, then try to shrink the window from the left
+            while (sum > x && start <= end) {
+                // Update the minimum length of subarray
+                minLength = Math.min(minLength, end - start + 1);
+
+                // Shrink the window from the left
+                sum -= a[start];
+                start++;
+            }
+
+            end++; // Expand the window from the right
+        }
+
+        return minLength == Integer.MAX_VALUE ? 0 : minLength;
+    }
+}
+

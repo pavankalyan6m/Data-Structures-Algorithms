@@ -1,0 +1,31 @@
+
+class Solution
+{
+    public long findMinDiff(ArrayList<Integer> a, int n, int m) {
+        if (m > n) {
+            return -1; // Not enough chocolates for each student to get one packet
+        }
+
+        Collections.sort(a); // Sort the ArrayList in ascending order
+        int start = 0;
+        int end = m - 1;
+        long minDifference = Integer.MAX_VALUE;
+
+       System.out.println("Sorted Array is: "+a);
+       while (end < n) {
+        int difference = a.get(end) - a.get(start); // Calculate the difference between the chocolates at positions 'end' and 'start'.
+        //System.out.println(difference);
+        //System.out.println("end: "+a.get(end));
+        //System.out.println("start: "+a.get(start));
+        if (difference < minDifference) 
+        { // If the difference is less than the current 'minDifference', update 'minDifference'.
+           
+            minDifference = difference;
+            //System.out.println(minDifference);
+        }
+        start++; // Move the 'start' pointer to the right to consider the next packet for the next iteration.
+        end++; // Move the 'end' pointer to the right to consider the next packet for the next iteration.
+       }
+        return minDifference;
+    }
+}

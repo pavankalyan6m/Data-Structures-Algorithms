@@ -1,0 +1,38 @@
+
+class Solution{
+    public static int doUnion(int a[], int n, int b[], int m) 
+    {
+        //Your code here
+        HashSet<Integer> list = new HashSet<>();
+        for(int i: a)
+        {
+            list.add(i);
+        }
+        for(int i: b)
+        {
+          list.add(i);
+        }
+        return list.size();
+    }
+   
+
+    public static int doInterSec(int a[], int n, int b[], int m) 
+    {
+        //Your code here
+        int count=0;
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i: a)
+        {
+            list.add(i);
+        }
+        for(int i: b)
+        {
+          if(list.contains(i))
+          {
+              count++;
+          }
+        }
+        return count;
+    }
+    
+}
