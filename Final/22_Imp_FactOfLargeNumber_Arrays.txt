@@ -1,0 +1,44 @@
+
+//User function Template for Java
+class Solution {
+    static ArrayList<Integer> factorial(int N){
+        //code here
+      ArrayList<Integer> list = new ArrayList<>();
+      list.add(1);
+
+       if (N == 0) {
+            return list;
+        }
+
+        for (int i = 2; i <= N; i++) {
+            list = multiply(list, i);
+        }
+
+        
+        Collections.reverse(list); // Reverse the list to get the correct order
+
+        return list;
+    }
+
+    static ArrayList<Integer> multiply(ArrayList<Integer> list, int x) {
+        int carry = 0;
+        ArrayList<Integer> result = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            int prod = list.get(i) * x + carry;//1*2+0
+            result.add(prod % 10);//[1,2]
+            carry = prod / 10;// 2 //There will be no carry as the max value for each digit is less than 10
+           // System.out.println("prod is :" +prod+"Carry is: "+carry);
+        }
+       // System.out.println("Carry is: "+carry);
+
+        while (carry > 0) {
+            result.add(carry % 10);
+            carry /= 10;
+           // System.out.println(result);
+        }
+
+        //System.out.println("Final List is: "+result);
+        return result;
+    }
+}
